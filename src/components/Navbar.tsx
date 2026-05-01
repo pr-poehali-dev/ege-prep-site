@@ -113,7 +113,7 @@ export function BottomNav({ page, setPage }: BottomNavProps) {
       className="fixed bottom-0 left-0 right-0 md:hidden z-40 glass"
       style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
     >
-      <div className="grid grid-cols-6 px-2 py-2">
+      <div className="grid grid-cols-7 px-2 py-2">
         {NAV_ITEMS.map((item) => (
           <button
             key={item.id}

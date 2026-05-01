@@ -1,5 +1,7 @@
+import { useState } from "react";
 import Icon from "@/components/ui/icon";
-import { SUBJECTS, COURSES, TESTS, MATERIALS, STATS } from "@/components/data";
+import { SUBJECTS, COURSES, TESTS, MATERIALS, STATS, TEST_DATA, TestData } from "@/components/data";
+import TestRunner from "@/components/TestRunner";
 
 export function DifficultyBadge({ level }: { level: string }) {
   const map: Record<string, string> = {
@@ -211,56 +213,70 @@ export function CoursesPage() {
 }
 
 export function TestsPage() {
+  const [activeTest, setActiveTest] = useState<TestData | null>(null);
+
+  const startRandom = () => {
+    const keys = Object.keys(TEST_DATA);
+    const key = keys[Math.floor(Math.random() * keys.length)];
+    setActiveTest(TEST_DATA[key]);
+  };
+
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <h2 className="font-oswald text-4xl font-bold text-white uppercase">Тесты</h2>
-        <button className="btn-neon px-5 py-2 rounded-xl text-sm">Случайный тест</button>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {TESTS.map((t, i) => (
-          <div
-            key={t.title}
-            className="glass-card rounded-2xl p-5 animate-fade-up cursor-pointer"
-            style={{ animationDelay: `${i * 0.1}s`, opacity: 0 }}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <span
-                className="subject-badge text-xs"
-                style={{ background: `${t.color}18`, color: t.color }}
-              >
-                {t.subject}
-              </span>
-              <DifficultyBadge level={t.difficulty} />
-            </div>
-            <h3 className="font-semibold text-white mb-4 leading-snug">{t.title}</h3>
+    <>
+      {activeTest && <TestRunner test={activeTest} onClose={() => setActiveTest(null)} />}
+      <div className="space-y-8">
+        <div className="flex items-center justify-between">
+          <h2 className="font-oswald text-4xl font-bold text-white uppercase">Тесты</h2>
+          <button onClick={startRandom} className="btn-neon px-5 py-2 rounded-xl text-sm">
+            Случайный тест
+          </button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {TESTS.map((t, i) => (
             <div
-              className="flex items-center gap-4 text-sm mb-5"
-              style={{ color: "rgba(255,255,255,0.45)" }}
+              key={t.title}
+              className="glass-card rounded-2xl p-5 animate-fade-up cursor-pointer"
+              style={{ animationDelay: `${i * 0.1}s`, opacity: 0 }}
             >
-              <span className="flex items-center gap-1">
-                <Icon name="HelpCircle" size={13} />
-                {t.questions} вопросов
-              </span>
-              <span className="flex items-center gap-1">
-                <Icon name="Clock" size={13} />
-                {t.time}
-              </span>
+              <div className="flex items-center gap-2 mb-3">
+                <span
+                  className="subject-badge text-xs"
+                  style={{ background: `${t.color}18`, color: t.color }}
+                >
+                  {t.subject}
+                </span>
+                <DifficultyBadge level={t.difficulty} />
+              </div>
+              <h3 className="font-semibold text-white mb-4 leading-snug">{t.title}</h3>
+              <div
+                className="flex items-center gap-4 text-sm mb-5"
+                style={{ color: "rgba(255,255,255,0.45)" }}
+              >
+                <span className="flex items-center gap-1">
+                  <Icon name="HelpCircle" size={13} />
+                  {t.questions} вопросов
+                </span>
+                <span className="flex items-center gap-1">
+                  <Icon name="Clock" size={13} />
+                  {t.time}
+                </span>
+              </div>
+              <button
+                onClick={() => setActiveTest(TEST_DATA[t.title] ?? null)}
+                className="w-full py-2.5 rounded-xl font-semibold text-sm transition-all"
+                style={{
+                  background: `${t.color}15`,
+                  color: t.color,
+                  border: `1px solid ${t.color}25`,
+                }}
+              >
+                Начать тест
+              </button>
             </div>
-            <button
-              className="w-full py-2.5 rounded-xl font-semibold text-sm transition-all"
-              style={{
-                background: `${t.color}15`,
-                color: t.color,
-                border: `1px solid ${t.color}25`,
-              }}
-            >
-              Начать тест
-            </button>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

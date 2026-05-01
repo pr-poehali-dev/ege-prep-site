@@ -3,6 +3,7 @@ import { Page } from "@/components/data";
 import Navbar, { BottomNav } from "@/components/Navbar";
 import { HomePage, CoursesPage, TestsPage, MaterialsPage } from "@/components/pages/ContentPages";
 import { ProgressPage, ProfilePage, AboutPage } from "@/components/pages/UserPages";
+import { TheoryPage } from "@/components/pages/TheoryPage";
 
 export default function Index() {
   const [page, setPage] = useState<Page>("home");
@@ -18,6 +19,8 @@ export default function Index() {
         return <TestsPage />;
       case "materials":
         return <MaterialsPage />;
+      case "theory":
+        return <TheoryPage />;
       case "progress":
         return <ProgressPage />;
       case "profile":
