@@ -1,4 +1,4 @@
-export type Page = "home" | "courses" | "tests" | "materials" | "progress" | "profile" | "theory";
+export type Page = "home" | "courses" | "tests" | "materials" | "progress" | "profile" | "theory" | "exams";
 
 export const SUBJECTS = [
   { name: "Математика", color: "#00d4ff", bg: "rgba(0,212,255,0.12)", icon: "Calculator", score: 78, tasks: 142 },
@@ -81,6 +81,7 @@ export const NAV_ITEMS: { id: Page; label: string; icon: string }[] = [
   { id: "home", label: "Главная", icon: "Home" },
   { id: "courses", label: "Курсы", icon: "GraduationCap" },
   { id: "tests", label: "Тесты", icon: "ClipboardList" },
+  { id: "exams", label: "Задания", icon: "FileQuestion" },
   { id: "theory", label: "Теория", icon: "BookMarked" },
   { id: "materials", label: "Материалы", icon: "FolderOpen" },
   { id: "progress", label: "Прогресс", icon: "BarChart3" },
